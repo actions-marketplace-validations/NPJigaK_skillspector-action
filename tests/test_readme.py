@@ -4,6 +4,13 @@ from pathlib import Path
 def test_readme_documents_core_usage_and_security_notes() -> None:
     readme = Path("README.md").read_text(encoding="utf-8")
 
+    assert "github/actions/workflow/status/NPJigaK/skillspector-action/ci.yml" in readme
+    assert "github/v/release/NPJigaK/skillspector-action" in readme
+    assert "bundled%20SkillSpector-v2.12.0" in readme
+    assert "github/v/release/NVIDIA/SkillSpector" in readme
+    assert "display_name=tag&sort=date&label=upstream%20latest" in readme
+    assert "pinned to its full upstream commit" in readme
+    assert "c7958a3268d9498644b22edb75d0f051bbc8cbfc" in readme
     assert "NPJigaK/skillspector-action@v1" in readme
     assert "permissions:" in readme
     assert "security-events: write" in readme
@@ -17,6 +24,11 @@ def test_readme_documents_core_usage_and_security_notes() -> None:
     assert "## Status badge" in readme
     assert "actions/workflows/skillspector.yml/badge.svg?branch=main" in readme
     assert "not a security certification" in readme
+    assert "## Version and update policy" in readme
+    assert "`@v1` reference is a moving major tag" in readme
+    assert "does not merge the PR or publish a release automatically" in readme
+    assert "NPJigaK/skillspector-action@v1.1.0" in readme
+    assert "NPJigaK/skillspector-action@<full-commit-sha>" in readme
     assert "docs/advanced-usage.md" in readme
     assert "docs/maintainer.md" in readme
 

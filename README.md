@@ -1,8 +1,16 @@
 # skillspector-action
 
+[![CI](https://img.shields.io/github/actions/workflow/status/NPJigaK/skillspector-action/ci.yml?branch=main&label=CI)](https://github.com/NPJigaK/skillspector-action/actions/workflows/ci.yml?query=branch%3Amain)
+[![Action release](https://img.shields.io/github/v/release/NPJigaK/skillspector-action?display_name=tag&sort=semver&label=action)](https://github.com/NPJigaK/skillspector-action/releases/latest)
+[![Bundled SkillSpector](https://img.shields.io/badge/bundled%20SkillSpector-v2.12.0-76B900?logo=nvidia&logoColor=white)](https://github.com/NVIDIA/SkillSpector/releases/tag/v2.12.0)
+[![Upstream latest](https://img.shields.io/github/v/release/NVIDIA/SkillSpector?display_name=tag&sort=date&label=upstream%20latest)](https://github.com/NVIDIA/SkillSpector/releases/latest)
+[![License](https://img.shields.io/github/license/NPJigaK/skillspector-action)](LICENSE)
+
 Scan AI agent skills with [NVIDIA SkillSpector](https://github.com/NVIDIA/SkillSpector) from GitHub Actions.
 
 This action is for skill authors and skill registry maintainers who want a simple CI check for `SKILL.md` repositories. It runs static analysis by default, uploads reports, and only fails CI when you ask it to.
+
+The runtime image currently bundles SkillSpector **v2.12.0**, pinned to its full upstream commit [`c7958a3268d9498644b22edb75d0f051bbc8cbfc`](https://github.com/NVIDIA/SkillSpector/commit/c7958a3268d9498644b22edb75d0f051bbc8cbfc) for reproducible builds. Compare the bundled and upstream-latest badges to see whether an update is available. Updates are tested before the pinned version is moved.
 
 ## Quick start
 
@@ -46,6 +54,20 @@ Fail CI only for the severities you care about:
     fail-on: critical
     upload-sarif: true
 ```
+
+## Version and update policy
+
+The recommended `@v1` reference is a moving major tag. After a compatible v1 release is reviewed, tested, and published, `@v1` moves to that release. Existing workflows using `NPJigaK/skillspector-action@v1` then automatically receive its SkillSpector engine updates and compatibility fixes without changing their workflow YAML.
+
+That convenience also has an operational impact: a newer scanner can add detections or change finding severities and risk scores, so workflows with `fail-on` or `min-score` thresholds may produce different results after a v1 release. Review the [release notes](https://github.com/NPJigaK/skillspector-action/releases) when the Action release badge changes.
+
+The upstream-latest badge updates when NVIDIA publishes a new GitHub Latest release. A weekly and manually dispatchable maintenance workflow compares that release with the bundled version and opens or refreshes an update pull request when needed. It validates the real scanner image before opening the PR; it does not merge the PR or publish a release automatically.
+
+Choose the reference that matches your update policy:
+
+- `NPJigaK/skillspector-action@v1` follows reviewed, compatible v1 releases automatically.
+- `NPJigaK/skillspector-action@v1.1.0` stays on that exact Action release until you edit the workflow.
+- `NPJigaK/skillspector-action@<full-commit-sha>` provides the strongest immutable pin for high-security or reproducible workflows.
 
 ## Status badge
 
